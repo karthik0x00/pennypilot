@@ -1,4 +1,4 @@
-package com.challenge.PennyPilot;
+package com.challenge.pennypilot;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
