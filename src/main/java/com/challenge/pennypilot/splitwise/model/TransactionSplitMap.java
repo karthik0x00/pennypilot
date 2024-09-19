@@ -5,10 +5,10 @@ import jakarta.persistence.*;
 @Entity
 public class TransactionSplitMap {
     @EmbeddedId
-    private TransactionSplitMapID transactionSplitMapID;
+    private TransactionSplitMapID transactionSplitMapId;
 
     @ManyToOne
-    @MapsId("transactionID")
+    @MapsId("transactionId")
     @JoinColumn(name = "transaction_id")
     private Transaction transaction;
 

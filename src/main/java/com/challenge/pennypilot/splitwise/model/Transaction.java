@@ -9,7 +9,7 @@ import java.util.Set;
 @Entity
 public class Transaction {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long transactionID;
+    private long transactionId;
 
     @OneToOne
     @JoinColumn(name = "paid_by")

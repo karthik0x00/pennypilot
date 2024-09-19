@@ -8,7 +8,7 @@ import java.util.Set;
 @Entity @Table(name = "GroupTable")
 public class Group {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long groupID;
+    private long groupId;
 
     private String name;
     private String description;

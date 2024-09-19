@@ -8,10 +8,10 @@ import java.util.Set;
 @Entity @Table(name = "UserTable")
 public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long userID;
+    private long userId;
     private String firstName;
     private String lastName;
-    private String emailID;
+    private String emailId;
     private String password;
     private boolean isActive;
     private boolean isConfirmed;
@@ -19,3 +19,4 @@ public class User {
     @ManyToMany(mappedBy = "users")
     private Set<Group> groups;
 }
+
