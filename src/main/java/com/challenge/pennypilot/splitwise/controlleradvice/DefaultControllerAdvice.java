@@ -14,7 +14,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @ControllerAdvice
 public class DefaultControllerAdvice {
-    @ExceptionHandler({ NoResourceFoundException.class, NoHandlerFoundException.class, ResourceNotFoundException.class})
+    @ExceptionHandler({ NoResourceFoundException.class, NoHandlerFoundException.class })
     public ResponseEntity<NotFoundResponse> handleNoHandlerFoundException(Exception e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).contentType(MediaType.APPLICATION_JSON).body(new NotFoundResponse());
     }
