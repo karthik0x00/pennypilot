@@ -1,7 +1,7 @@
 package com.challenge.pennypilot.splitwise.controller;
 
-import com.challenge.pennypilot.splitwise.exception.ResourceNotFoundException;
 import com.challenge.pennypilot.splitwise.dto.UserDTO;
+import com.challenge.pennypilot.splitwise.exception.ResourceNotFoundException;
 import com.challenge.pennypilot.splitwise.response.SuccessResponse;
 import com.challenge.pennypilot.splitwise.service.UserService;
 import com.challenge.pennypilot.splitwise.utils.URIUtil;

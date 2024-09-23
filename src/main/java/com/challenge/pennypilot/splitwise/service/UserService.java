@@ -1,9 +1,9 @@
 package com.challenge.pennypilot.splitwise.service;
 
-import com.challenge.pennypilot.splitwise.model.Group;
 import com.challenge.pennypilot.splitwise.dto.GroupDTO;
-import com.challenge.pennypilot.splitwise.exception.ResourceNotFoundException;
 import com.challenge.pennypilot.splitwise.dto.UserDTO;
+import com.challenge.pennypilot.splitwise.exception.ResourceNotFoundException;
+import com.challenge.pennypilot.splitwise.model.Group;
 import com.challenge.pennypilot.splitwise.model.User;
 import com.challenge.pennypilot.splitwise.repository.UserCRUDRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +15,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+class UserNotFoundException extends ResourceNotFoundException {
+    public UserNotFoundException() {
+        super("User does not exist");
+    }
+}
+
 @Service
 public class UserService {
     @Autowired
@@ -23,7 +29,7 @@ public class UserService {
     public User getUserModelWithId(long userId) throws ResourceNotFoundException {
         Optional<User> optionalUser = repository.findById(userId);
         if (optionalUser.isEmpty()) {
-            throw new ResourceNotFoundException("User does not exist");
+            throw new UserNotFoundException();
         }
         return optionalUser.get();
     }
@@ -39,10 +45,9 @@ public class UserService {
 
     public UserDTO createUser(UserDTO userDTO) {
         User user = new User();
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
-        user.setPassword(userDTO.getPassword());
         user.setEmailId(userDTO.getEmailId());
+        user.setActive(true);
+        user.setName(userDTO.getName());
         return new UserDTO(repository.save(user));
     }
 
@@ -51,28 +56,28 @@ public class UserService {
     }
 
     public UserDTO updateUserWithId(long userId, UserDTO userDTO) throws Exception {
-        String firstName = userDTO.getFirstName();
-        String lastName = userDTO.getLastName();
-        String emailId = userDTO.getEmailId();
-        String password = userDTO.getPassword();
+        String name = userDTO.getName();
         User user = getUserModelWithId(userId);
-        if (StringUtils.hasLength(firstName)) {
-            user.setFirstName(firstName);
-        }
-        if (StringUtils.hasLength(lastName)) {
-            user.setLastName(lastName);
-        }
-        if (StringUtils.hasLength(emailId)) {
-            user.setEmailId(emailId);
-        }
-        if (StringUtils.hasLength(password)) {
-            user.setPassword(password);
+        if (StringUtils.hasLength(name)) {
+            user.setName(name);
         }
         return new UserDTO(repository.save(user));
     }
 
     public boolean isUserExists(long userId) {
         return repository.existsById(userId);
+    }
+
+    public boolean isUserExists(String emailId) {
+        return repository.existsByEmailId(emailId);
+    }
+
+    public UserDTO getUserWithEmailId(String emailId) throws ResourceNotFoundException {
+        Optional<User> optionalUser = repository.findFirstByEmailIdIgnoreCase(emailId);
+        if (optionalUser.isEmpty()) {
+            throw new UserNotFoundException();
+        }
+        return new UserDTO(optionalUser.get());
     }
 
 //    User and Group relational API

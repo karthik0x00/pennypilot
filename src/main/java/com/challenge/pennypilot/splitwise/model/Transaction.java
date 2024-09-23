@@ -1,7 +1,7 @@
 package com.challenge.pennypilot.splitwise.model;
 
-import jakarta.persistence.*;
 import com.challenge.pennypilot.splitwise.SplitStrategy;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.Set;
