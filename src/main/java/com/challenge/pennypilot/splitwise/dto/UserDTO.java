@@ -1,5 +1,6 @@
 package com.challenge.pennypilot.splitwise.dto;
 
+import com.challenge.pennypilot.splitwise.exception.InvalidDataProvidedException;
 import com.challenge.pennypilot.splitwise.model.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.util.StringUtils;
@@ -23,18 +24,18 @@ public class UserDTO extends AbstractDTO {
         this.userId = user.getUserId();
     }
 
-    public void validate() throws Exception {
+    public void validate() throws InvalidDataProvidedException {
         if (!StringUtils.hasLength(firstName)) {
-            throw new Exception("First Name must not be empty");
+            throw new InvalidDataProvidedException("First Name must not be empty");
         }
         if (!StringUtils.hasLength(lastName)) {
-            throw new Exception("Last Name must not be empty");
+            throw new InvalidDataProvidedException("Last Name must not be empty");
         }
         if (!StringUtils.hasLength(password)) {
-            throw new Exception("Password must not be empty");
+            throw new InvalidDataProvidedException("Password must not be empty");
         }
         if (!StringUtils.hasLength(emailId)) {
-            throw new Exception("Email must not be empty");
+            throw new InvalidDataProvidedException("Email must not be empty");
         }
     }
 

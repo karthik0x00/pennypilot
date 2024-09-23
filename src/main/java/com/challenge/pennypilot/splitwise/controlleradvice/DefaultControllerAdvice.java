@@ -1,6 +1,8 @@
 package com.challenge.pennypilot.splitwise.controlleradvice;
 
+import com.challenge.pennypilot.splitwise.exception.InvalidDataProvidedException;
 import com.challenge.pennypilot.splitwise.exception.ResourceNotFoundException;
+import com.challenge.pennypilot.splitwise.response.InvalidDataProvidedResponse;
 import com.challenge.pennypilot.splitwise.response.MethodNotSupportedResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,5 +29,10 @@ public class DefaultControllerAdvice {
     @ExceptionHandler({ HttpRequestMethodNotSupportedException.class })
     public ResponseEntity<MethodNotSupportedResponse> handleMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).contentType(MediaType.APPLICATION_JSON).body(new MethodNotSupportedResponse(e.getMethod()));
+    }
+
+    @ExceptionHandler({ InvalidDataProvidedException.class })
+    public ResponseEntity<InvalidDataProvidedResponse> handleInvalidDataProvidedException(InvalidDataProvidedException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).contentType(MediaType.APPLICATION_JSON).body(new InvalidDataProvidedResponse(e.getMessage()));
     }
 }
