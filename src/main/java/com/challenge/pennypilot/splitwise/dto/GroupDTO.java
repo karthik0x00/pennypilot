@@ -1,5 +1,6 @@
 package com.challenge.pennypilot.splitwise.dto;
 
+import com.challenge.pennypilot.splitwise.exception.InvalidDataProvidedException;
 import com.challenge.pennypilot.splitwise.model.Group;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.util.StringUtils;
@@ -19,9 +20,9 @@ public class GroupDTO extends AbstractDTO {
     }
 
     @Override
-    public void validate() throws Exception {
+    public void validate() throws InvalidDataProvidedException {
         if (!StringUtils.hasLength(name)) {
-            throw new Exception("Group name must not be empty");
+            throw new InvalidDataProvidedException("Group name must not be empty");
         }
     }
 
