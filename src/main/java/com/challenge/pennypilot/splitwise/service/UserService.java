@@ -20,7 +20,7 @@ public class UserService {
     @Autowired
     private UserCRUDRepository repository;
 
-    User getUserModelWithId(long userId) throws ResourceNotFoundException {
+    public User getUserModelWithId(long userId) throws ResourceNotFoundException {
         Optional<User> optionalUser = repository.findById(userId);
         if (optionalUser.isEmpty()) {
             throw new ResourceNotFoundException("User does not exist");
@@ -28,7 +28,7 @@ public class UserService {
         return optionalUser.get();
     }
 
-    List<User> getUserModelsWithIds(List<Long> userIds) {
+    public List<User> getUserModelsWithIds(List<Long> userIds) {
         return repository.findAllById(userIds);
     }
 
@@ -69,6 +69,10 @@ public class UserService {
             user.setPassword(password);
         }
         return new UserDTO(repository.save(user));
+    }
+
+    public boolean isUserExists(long userId) {
+        return repository.existsById(userId);
     }
 
 //    User and Group relational API

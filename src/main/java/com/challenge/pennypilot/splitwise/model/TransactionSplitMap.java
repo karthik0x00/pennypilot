@@ -16,4 +16,28 @@ public class TransactionSplitMap {
 //    Can be percentage in case of percent
 //    Can be a number in case of share
     private long splitValue;
+
+    public TransactionSplitMapID getTransactionSplitMapId() {
+        return transactionSplitMapId;
+    }
+
+    public void setTransactionSplitMapId(TransactionSplitMapID transactionSplitMapId) {
+        this.transactionSplitMapId = transactionSplitMapId;
+    }
+
+    public Transaction getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
+    }
+
+    public long getSplitValue() {
+        return splitValue;
+    }
+
+    public void setSplitValue(long splitValue) {
+        this.splitValue = splitValue;
+    }
 }
