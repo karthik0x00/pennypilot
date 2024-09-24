@@ -1,9 +1,9 @@
 package com.challenge.pennypilot.splitwise.service;
 
+import com.challenge.pennypilot.splitwise.dto.TransactionDTO;
 import com.challenge.pennypilot.splitwise.exception.ResourceNotFoundException;
 import com.challenge.pennypilot.splitwise.model.Group;
 import com.challenge.pennypilot.splitwise.model.Transaction;
-import com.challenge.pennypilot.splitwise.dto.TransactionDTO;
 import com.challenge.pennypilot.splitwise.model.User;
 import com.challenge.pennypilot.splitwise.repository.TransactionCRUDRepository;
 import org.springframework.beans.factory.annotation.Autowired;

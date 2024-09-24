@@ -10,12 +10,12 @@ public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
 
-    private String firstName;
-    private String lastName;
+    private String name;
+
+    @Column(unique = true)
     private String emailId;
-    private String password;
+
     private boolean isActive;
-    private boolean isConfirmed;
     private LocalDateTime createdTime = LocalDateTime.now();
 
     @ManyToMany(mappedBy = "users")
@@ -29,22 +29,6 @@ public class User {
         this.userId = userId;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public String getEmailId() {
         return emailId;
     }
@@ -53,28 +37,12 @@ public class User {
         this.emailId = emailId;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public boolean isActive() {
         return isActive;
     }
 
     public void setActive(boolean active) {
         isActive = active;
-    }
-
-    public boolean isConfirmed() {
-        return isConfirmed;
-    }
-
-    public void setConfirmed(boolean confirmed) {
-        isConfirmed = confirmed;
     }
 
     public LocalDateTime getCreatedTime() {
@@ -91,6 +59,14 @@ public class User {
 
     public void setGroups(Set<Group> groups) {
         this.groups = groups;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
 

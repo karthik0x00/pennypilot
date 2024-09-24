@@ -6,46 +6,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.util.StringUtils;
 
 public class UserDTO extends AbstractDTO {
-    private String firstName;
-    private String lastName;
+    private String name;
     private String emailId;
 
     private long userId;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String password;
-
     public UserDTO() {}
 
     public UserDTO(User user) {
-        this.firstName = user.getFirstName();
         this.emailId = user.getEmailId();
-        this.lastName = user.getLastName();
         this.userId = user.getUserId();
+        this.name = user.getName();
     }
 
-    public void validate() throws InvalidDataProvidedException {
-        if (!StringUtils.hasLength(firstName)) {
-            throw new InvalidDataProvidedException("First Name must not be empty");
-        }
-        if (!StringUtils.hasLength(lastName)) {
-            throw new InvalidDataProvidedException("Last Name must not be empty");
-        }
-        if (!StringUtils.hasLength(password)) {
-            throw new InvalidDataProvidedException("Password must not be empty");
-        }
-        if (!StringUtils.hasLength(emailId)) {
-            throw new InvalidDataProvidedException("Email must not be empty");
-        }
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
+    public void validate() throws InvalidDataProvidedException {}
 
     public long getUserId() {
         return userId;
@@ -59,23 +33,15 @@ public class UserDTO extends AbstractDTO {
         return emailId;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public void setEmailId(String emailId) {
         this.emailId = emailId;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

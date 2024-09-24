@@ -1,7 +1,5 @@
 package com.challenge.pennypilot.splitwise.response;
 
-import org.springframework.http.HttpStatus;
-
 public class SuccessResponse implements Response {
     private int status;
     private String message;
