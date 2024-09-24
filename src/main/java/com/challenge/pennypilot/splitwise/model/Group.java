@@ -9,6 +9,7 @@ import java.util.Set;
 @Entity @Table(name = "GroupTable")
 public class Group {
     public Group() {}
+
     public Group(String name, String description) {
         this.name = name;
         this.description = description;
@@ -21,9 +22,13 @@ public class Group {
     private String description;
     private boolean isActive;
     private LocalDateTime createdTime = LocalDateTime.now();
+
     @OneToOne
     @JoinColumn(name = "created_by")
     private User createdBy;
+
+    @OneToMany(mappedBy = "group", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Transaction> transactions;
 
     @ManyToMany
     @JoinTable (

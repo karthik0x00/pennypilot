@@ -23,7 +23,7 @@ public class GroupService {
     @Autowired
     private UserService userService;
 
-    private Group getGroupModelWithId(long groupId) throws ResourceNotFoundException {
+    public Group getGroupModelWithId(long groupId) throws ResourceNotFoundException {
         Optional<Group> group = repository.findById(groupId);
         if (group.isEmpty()) {
             throw new ResourceNotFoundException("Group does not exist");
