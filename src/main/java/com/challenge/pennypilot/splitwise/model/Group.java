@@ -3,8 +3,8 @@ package com.challenge.pennypilot.splitwise.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity @Table(name = "GroupTable")
 public class Group {
@@ -23,7 +23,7 @@ public class Group {
     private boolean isActive;
     private LocalDateTime createdTime = LocalDateTime.now();
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "created_by")
     private User createdBy;
 
@@ -36,7 +36,7 @@ public class Group {
         joinColumns = @JoinColumn(name = "group_id"),
         inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-    private Set<User> users;
+    private List<User> users;
 
     public long getGroupId() {
         return groupId;
@@ -86,11 +86,14 @@ public class Group {
         this.createdBy = createdBy;
     }
 
-    public Set<User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
     public void addUser(User user) {
+        if (this.users == null) {
+            this.users = new ArrayList<>();
+        }
         this.users.add(user);
     }
 

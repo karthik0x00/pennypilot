@@ -34,6 +34,14 @@ public class UserService {
         return optionalUser.get();
     }
 
+    public User getUserModelWithEmailId(String emailId) throws ResourceNotFoundException {
+        Optional<User> optionalUser = repository.findFirstByEmailIdIgnoreCase(emailId);
+        if (optionalUser.isEmpty()) {
+            throw new UserNotFoundException();
+        }
+        return optionalUser.get();
+    }
+
     public List<User> getUserModelsWithIds(List<Long> userIds) {
         return repository.findAllById(userIds);
     }
@@ -73,11 +81,7 @@ public class UserService {
     }
 
     public UserDTO getUserWithEmailId(String emailId) throws ResourceNotFoundException {
-        Optional<User> optionalUser = repository.findFirstByEmailIdIgnoreCase(emailId);
-        if (optionalUser.isEmpty()) {
-            throw new UserNotFoundException();
-        }
-        return new UserDTO(optionalUser.get());
+        return new UserDTO(getUserModelWithEmailId(emailId));
     }
 
 //    User and Group relational API

@@ -1,7 +1,9 @@
 package com.challenge.pennypilot.splitwise.controlleradvice;
 
+import com.challenge.pennypilot.splitwise.exception.AuthorizationException;
 import com.challenge.pennypilot.splitwise.exception.InvalidDataProvidedException;
 import com.challenge.pennypilot.splitwise.exception.ResourceNotFoundException;
+import com.challenge.pennypilot.splitwise.response.ForbiddenResponse;
 import com.challenge.pennypilot.splitwise.response.InvalidDataProvidedResponse;
 import com.challenge.pennypilot.splitwise.response.MethodNotSupportedResponse;
 import com.challenge.pennypilot.splitwise.response.NotFoundResponse;
@@ -34,5 +36,10 @@ public class DefaultControllerAdvice {
     @ExceptionHandler({ InvalidDataProvidedException.class })
     public ResponseEntity<InvalidDataProvidedResponse> handleInvalidDataProvidedException(InvalidDataProvidedException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).contentType(MediaType.APPLICATION_JSON).body(new InvalidDataProvidedResponse(e.getMessage()));
+    }
+
+    @ExceptionHandler({ AuthorizationException.class })
+    public ResponseEntity<Object> handleAuthorizationException(AuthorizationException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).contentType(MediaType.APPLICATION_JSON).body(new ForbiddenResponse(e.getMessage()));
     }
 }

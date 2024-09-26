@@ -2,6 +2,7 @@ package com.challenge.pennypilot.splitwise.service;
 
 import com.challenge.pennypilot.splitwise.dto.GroupDTO;
 import com.challenge.pennypilot.splitwise.dto.UserDTO;
+import com.challenge.pennypilot.splitwise.exception.InvalidDataProvidedException;
 import com.challenge.pennypilot.splitwise.exception.ResourceNotFoundException;
 import com.challenge.pennypilot.splitwise.model.Group;
 import com.challenge.pennypilot.splitwise.model.User;
@@ -35,8 +36,10 @@ public class GroupService {
         return new GroupDTO(getGroupModelWithId(groupId));
     }
 
-    public GroupDTO createGroup(GroupDTO groupDTO) throws Exception {
+    public GroupDTO createGroup(GroupDTO groupDTO, User createdBy) throws Exception {
         Group group = new Group(groupDTO.getName(), groupDTO.getDescription());
+        group.setCreatedBy(createdBy);
+        group.addUser(createdBy);
         return new GroupDTO(repository.save(group));
     }
 
@@ -79,9 +82,12 @@ public class GroupService {
         return userDTOs;
     }
 
-    public void deleteUserFromGroupWithId(long groupId, long userId) throws ResourceNotFoundException {
+    public void deleteUserFromGroupWithId(long groupId, long userId) throws ResourceNotFoundException, InvalidDataProvidedException {
         Group group = getGroupModelWithId(groupId);
-        Set<User> users = group.getUsers();
+        if (userId == group.getCreatedBy().getUserId()) {
+            throw new InvalidDataProvidedException("Cannot delete owner of the group");
+        }
+        List<User> users = group.getUsers();
         User userToRemove = userService.getUserModelWithId(userId);
         if (users.contains(userToRemove)) {
             users.remove(userToRemove);
