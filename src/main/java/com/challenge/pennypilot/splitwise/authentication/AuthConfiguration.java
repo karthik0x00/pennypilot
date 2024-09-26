@@ -1,4 +1,4 @@
-package com.challenge.pennypilot.splitwise.auth;
+package com.challenge.pennypilot.splitwise.authentication;
 
 import com.challenge.pennypilot.splitwise.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +32,7 @@ public class AuthConfiguration {
                 .authorizeHttpRequests((authorize) -> authorize.requestMatchers("/api/**", "/login-success").authenticated())
                 .oauth2Login(oauth2 ->
                         oauth2.userInfoEndpoint(endPoint ->
-                                endPoint.oidcUserService(oidcUserService())
-                                        .oidcUserService(oidcUserService()))
+                                endPoint.oidcUserService(oidcUserService()))
                                 .defaultSuccessUrl("/login-success")
                 )
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
@@ -48,7 +47,8 @@ public class AuthConfiguration {
                 OidcUser oidcUser = super.loadUser(userRequest);
                 Set<GrantedAuthority> mappedAuthorities = new HashSet<>(oidcUser.getAuthorities());
                 mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-                return new DefaultOidcUser(mappedAuthorities, oidcUser.getIdToken(), oidcUser.getUserInfo());
+                DefaultOidcUser authenticatedUser = new DefaultOidcUser(mappedAuthorities, oidcUser.getIdToken(), oidcUser.getUserInfo());
+                return authenticatedUser;
             }
         };
     }

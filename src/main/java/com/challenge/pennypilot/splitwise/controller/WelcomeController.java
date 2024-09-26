@@ -1,6 +1,6 @@
 package com.challenge.pennypilot.splitwise.controller;
 
-import com.challenge.pennypilot.splitwise.auth.AuthUtil;
+import com.challenge.pennypilot.splitwise.authentication.AuthenticationService;
 import com.challenge.pennypilot.splitwise.dto.UserDTO;
 import com.challenge.pennypilot.splitwise.service.UserService;
 import jakarta.servlet.http.Cookie;
@@ -14,10 +14,13 @@ public class WelcomeController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AuthenticationService authenticationService;
+
     @GetMapping("/login-success")
     public String getLoginSuccessPage(HttpServletRequest request) {
-        String email = AuthUtil.getUserEmail();
-        String name = AuthUtil.getName();
+        String email = authenticationService.getUserEmail();
+        String name = authenticationService.getName();
         if (!userService.isUserExists(email)) {
             UserDTO userDTO = new UserDTO();
             userDTO.setEmailId(email);
